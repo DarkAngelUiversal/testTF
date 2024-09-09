@@ -23,6 +23,11 @@ module "s3_bucket" {
     Name        = "StaticWebsite"
     Environment = "production"
   }
+}
+
+resource "aws_s3_bucket_policy" "s3_bucket_policy" {
+  bucket = "my-static-site-bucket-dawdawdawdawd"
+
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
@@ -30,8 +35,11 @@ module "s3_bucket" {
         Sid       = "PublicReadGetObject"
         Effect    = "Allow"
         Principal = "*"
-        Action    = "s3:GetObject"
-        Resource  = "arn:aws:s3:::my-static-site-bucket-dawdawdawdawd/*"
+        Action    = ["s3:GetObject", "s3:ListBucket"]
+        Resource = [
+          "arn:aws:s3:::my-static-site-bucket-dawdawdawdawd",
+          "arn:aws:s3:::my-static-site-bucket-dawdawdawdawd/*"
+        ]
       },
       {
         Sid    = "GitHubAccess"
@@ -48,8 +56,8 @@ module "s3_bucket" {
       }
     ]
   })
-
 }
+
 
 
 module "cloudfront" {
