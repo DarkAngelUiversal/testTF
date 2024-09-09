@@ -32,9 +32,23 @@ module "s3_bucket" {
         Principal = "*"
         Action    = "s3:GetObject"
         Resource  = "arn:aws:s3:::my-static-site-bucket-dawdawdawdawd/*"
+      },
+      {
+        Sid    = "GitHubAccess"
+        Effect = "Allow"
+        Principal = {
+          AWS = "arn:aws:iam::424499126527:role/github-actions-s3-role"
+        }
+        Action = [
+          "s3:PutObject",
+          "s3:GetObject",
+          "s3:DeleteObject"
+        ]
+        Resource = "arn:aws:s3:::my-static-site-bucket-dawdawdawdawd/*"
       }
     ]
   })
+
 }
 
 
