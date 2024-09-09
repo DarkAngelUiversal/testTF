@@ -27,7 +27,3 @@ jobs:
         run: |
           aws s3 sync ./website s3://my-static-site-bucket-dawdawdawdawd --delete
 
-      - name: Apply Terraform changes
-        run: |
-          terraform init
-          terraform apply -auto-approve
